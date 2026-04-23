@@ -9,7 +9,17 @@ import { formatAllDetails } from "@/lib/format";
 import { toast } from "sonner";
 
 const Index = () => {
-  const { data, isLoading, isFetching, error, refresh, countryFlag } = useIpInfo();
+  const {
+    data,
+    isLoading,
+    isRefreshing,
+    isDetailsLoading,
+    detailsUnavailable,
+    detailsMessage,
+    error,
+    refresh,
+    countryFlag,
+  } = useIpInfo();
 
   const handleCopyAll = async () => {
     if (!data) return;
@@ -48,15 +58,17 @@ const Index = () => {
             ip={data?.ip}
             ipv6={data?.ipv6}
             loading={isLoading}
-            isFetching={isFetching}
+            isRefreshing={isRefreshing}
             onRefresh={() => refresh()}
           />
         )}
 
         <DetailsGrid
           info={data}
-          loading={isLoading}
+          loading={isDetailsLoading}
           flag={countryFlag(data?.countryCode)}
+          detailsUnavailable={detailsUnavailable}
+          detailsMessage={detailsMessage}
         />
 
         <MapPreview lat={data?.latitude ?? null} lon={data?.longitude ?? null} />
@@ -75,7 +87,7 @@ const Index = () => {
       </main>
 
       <footer className="mx-auto max-w-2xl px-4 pb-10 text-center text-xs text-muted-foreground sm:px-6">
-        Data from ipify & ipapi.co. Privacy detection is best-effort.
+        Data from ipify, ipapi.co, and GeoJS. Privacy detection is best-effort.
       </footer>
     </div>
   );

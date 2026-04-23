@@ -7,6 +7,8 @@ type Props = {
   info?: IpInfo;
   loading: boolean;
   flag: string;
+  detailsUnavailable?: boolean;
+  detailsMessage?: string | null;
 };
 
 function Row({
@@ -37,7 +39,13 @@ function Row({
   );
 }
 
-export function DetailsGrid({ info, loading, flag }: Props) {
+export function DetailsGrid({
+  info,
+  loading,
+  flag,
+  detailsUnavailable = false,
+  detailsMessage = null,
+}: Props) {
   const location =
     [info?.city, info?.region, info?.country].filter(Boolean).join(", ") || "—";
 
@@ -57,11 +65,16 @@ export function DetailsGrid({ info, loading, flag }: Props) {
           <span className="truncate block">{info?.org ?? "—"}</span>
         </Row>
         <Row icon={Network} label="Connection" loading={loading}>
-          <PrivacyBadges
-            vpn={!!info?.vpn}
-            proxy={!!info?.proxy}
-            tor={!!info?.tor}
-          />
+          {detailsUnavailable ? (
+            <span className="text-muted-foreground">Unavailable</span>
+          ) : (
+            <PrivacyBadges
+              vpn={!!info?.vpn}
+              proxy={!!info?.proxy}
+              tor={!!info?.tor}
+              loading={loading}
+            />
+          )}
         </Row>
         <Row icon={Clock} label="Timezone" loading={loading}>
           {info?.timezone ?? "—"}
@@ -81,6 +94,14 @@ export function DetailsGrid({ info, loading, flag }: Props) {
           </span>
         </Row>
       </div>
+      {detailsUnavailable && detailsMessage ? (
+        <p
+          role="status"
+          className="mt-3 rounded-lg border border-border/60 bg-card px-4 py-3 text-sm text-muted-foreground"
+        >
+          {detailsMessage}
+        </p>
+      ) : null}
     </section>
   );
 }

@@ -9,11 +9,11 @@ type Props = {
   ip: string | null | undefined;
   ipv6: string | null | undefined;
   loading: boolean;
-  isFetching: boolean;
+  isRefreshing: boolean;
   onRefresh: () => void;
 };
 
-export function IpCard({ ip, ipv6, loading, isFetching, onRefresh }: Props) {
+export function IpCard({ ip, ipv6, loading, isRefreshing, onRefresh }: Props) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -73,10 +73,10 @@ export function IpCard({ ip, ipv6, loading, isFetching, onRefresh }: Props) {
         <Button
           variant="outline"
           onClick={onRefresh}
-          disabled={isFetching}
+          disabled={isRefreshing}
           className="transition-transform hover:-translate-y-0.5"
         >
-          <RefreshCw className={cn("h-4 w-4", isFetching && "animate-spin")} />
+          <RefreshCw className={cn("h-4 w-4", isRefreshing && "animate-spin")} />
           Refresh
         </Button>
       </div>
