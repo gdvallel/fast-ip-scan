@@ -63,6 +63,8 @@ const Index = () => {
           />
         )}
 
+        <div id="container-b37c9fd242e5177c814217e7a476492e" />
+
         <DetailsGrid
           info={data}
           loading={isDetailsLoading}
