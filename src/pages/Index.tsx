@@ -7,7 +7,26 @@ import { MapPreview } from "@/components/MapPreview";
 import { useIpInfo } from "@/hooks/useIpInfo";
 import { formatAllDetails } from "@/lib/format";
 import { toast } from "sonner";
-import SidebarAd from "@/components/SidebarAd";
+
+const AdSlot = () => (
+  <iframe
+    src="/ad-frame.html"
+    width={300}
+    height={250}
+    style={{ border: "none", display: "block", overflow: "hidden" }}
+    title="ad"
+  />
+);
+
+const Sidebar = () => (
+  <aside className="hidden w-[300px] shrink-0 xl:flex">
+    <div className="sticky top-4 flex flex-col gap-4">
+      <AdSlot />
+      <AdSlot />
+      <AdSlot />
+    </div>
+  </aside>
+);
 
 const Index = () => {
   const {
@@ -44,12 +63,8 @@ const Index = () => {
         <ThemeToggle />
       </header>
 
-      <div className="mx-auto flex max-w-[1560px] items-start justify-center gap-6 px-4">
-        <aside className="hidden shrink-0 2xl:block">
-          <div className="sticky top-4">
-            <SidebarAd />
-          </div>
-        </aside>
+      <div className="flex items-start justify-center gap-6 px-4">
+        <Sidebar />
 
         <main className="w-full max-w-2xl space-y-6 px-0 pb-16 sm:px-6">
           {error && !data ? (
@@ -94,11 +109,7 @@ const Index = () => {
           </div>
         </main>
 
-        <aside className="hidden shrink-0 2xl:block">
-          <div className="sticky top-4">
-            <SidebarAd />
-          </div>
-        </aside>
+        <Sidebar />
       </div>
 
       <footer className="mx-auto max-w-2xl px-4 pb-10 text-center text-xs text-muted-foreground sm:px-6">
