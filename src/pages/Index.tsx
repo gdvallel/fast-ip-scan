@@ -7,6 +7,7 @@ import { MapPreview } from "@/components/MapPreview";
 import { useIpInfo } from "@/hooks/useIpInfo";
 import { formatAllDetails } from "@/lib/format";
 import { toast } from "sonner";
+import SidebarAd from "@/components/SidebarAd";
 
 const Index = () => {
   const {
@@ -43,10 +44,10 @@ const Index = () => {
         <ThemeToggle />
       </header>
 
-      <div className="mx-auto flex max-w-6xl items-start justify-center gap-6 px-4">
-        <aside className="hidden w-[160px] shrink-0 xl:block">
+      <div className="mx-auto flex max-w-[1560px] items-start justify-center gap-6 px-4">
+        <aside className="hidden shrink-0 2xl:block">
           <div className="sticky top-4">
-            <div id="container-b37c9fd242e5177c814217e7a476492e" />
+            <SidebarAd />
           </div>
         </aside>
 
@@ -93,7 +94,11 @@ const Index = () => {
           </div>
         </main>
 
-        <aside className="hidden w-[160px] shrink-0 xl:block" />
+        <aside className="hidden shrink-0 2xl:block">
+          <div className="sticky top-4">
+            <SidebarAd />
+          </div>
+        </aside>
       </div>
 
       <footer className="mx-auto max-w-2xl px-4 pb-10 text-center text-xs text-muted-foreground sm:px-6">
