@@ -43,50 +43,58 @@ const Index = () => {
         <ThemeToggle />
       </header>
 
-      <main className="mx-auto max-w-2xl space-y-6 px-4 pb-16 sm:px-6">
-        {error && !data ? (
-          <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center">
-            <p className="text-sm font-medium text-destructive">
-              Couldn't fetch your IP details.
-            </p>
-            <Button variant="outline" onClick={() => refresh()} className="mt-3">
-              Retry
+      <div className="mx-auto flex max-w-6xl items-start justify-center gap-6 px-4">
+        <aside className="hidden w-[160px] shrink-0 xl:block">
+          <div className="sticky top-4">
+            <div id="container-b37c9fd242e5177c814217e7a476492e" />
+          </div>
+        </aside>
+
+        <main className="w-full max-w-2xl space-y-6 px-0 pb-16 sm:px-6">
+          {error && !data ? (
+            <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center">
+              <p className="text-sm font-medium text-destructive">
+                Couldn't fetch your IP details.
+              </p>
+              <Button variant="outline" onClick={() => refresh()} className="mt-3">
+                Retry
+              </Button>
+            </div>
+          ) : (
+            <IpCard
+              ip={data?.ip}
+              ipv6={data?.ipv6}
+              loading={isLoading}
+              isRefreshing={isRefreshing}
+              onRefresh={() => refresh()}
+            />
+          )}
+
+          <DetailsGrid
+            info={data}
+            loading={isDetailsLoading}
+            flag={countryFlag(data?.countryCode)}
+            detailsUnavailable={detailsUnavailable}
+            detailsMessage={detailsMessage}
+          />
+
+          <MapPreview lat={data?.latitude ?? null} lon={data?.longitude ?? null} />
+
+          <div className="flex justify-center pt-2">
+            <Button
+              variant="ghost"
+              onClick={handleCopyAll}
+              disabled={!data}
+              className="text-muted-foreground hover:text-foreground"
+            >
+              <ClipboardList className="h-4 w-4" />
+              Copy all details
             </Button>
           </div>
-        ) : (
-          <IpCard
-            ip={data?.ip}
-            ipv6={data?.ipv6}
-            loading={isLoading}
-            isRefreshing={isRefreshing}
-            onRefresh={() => refresh()}
-          />
-        )}
+        </main>
 
-        <div id="container-b37c9fd242e5177c814217e7a476492e" />
-
-        <DetailsGrid
-          info={data}
-          loading={isDetailsLoading}
-          flag={countryFlag(data?.countryCode)}
-          detailsUnavailable={detailsUnavailable}
-          detailsMessage={detailsMessage}
-        />
-
-        <MapPreview lat={data?.latitude ?? null} lon={data?.longitude ?? null} />
-
-        <div className="flex justify-center pt-2">
-          <Button
-            variant="ghost"
-            onClick={handleCopyAll}
-            disabled={!data}
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <ClipboardList className="h-4 w-4" />
-            Copy all details
-          </Button>
-        </div>
-      </main>
+        <aside className="hidden w-[160px] shrink-0 xl:block" />
+      </div>
 
       <footer className="mx-auto max-w-2xl px-4 pb-10 text-center text-xs text-muted-foreground sm:px-6">
         Data from ipify, ipapi.co, and GeoJS. Privacy detection is best-effort.
